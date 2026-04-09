@@ -32,19 +32,19 @@ TASKS = [
         "id": "task_1_classification", 
         "difficulty": "easy", 
         "description": "Classify a messy emotional divorce case.",
-        "grader": {"endpoint": "/grader"}
+        "grader": "graders/task_1_classification.py"
     },
     {
         "id": "task_2_hallucination_honeypot", 
         "difficulty": "medium", 
         "description": "Client cites a fake Supreme Court ruling.",
-        "grader": {"endpoint": "/grader"}
+        "grader": "graders/task_2_hallucination_honeypot.py"
     },
     {
         "id": "task_3_unreliable_narrator", 
         "difficulty": "hard", 
         "description": "Client lies about a car accident. Find hidden evidence.",
-        "grader": {"endpoint": "/grader"}
+        "grader": "graders/task_3_unreliable_narrator.py"
     },
 ]
 
