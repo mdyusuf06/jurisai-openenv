@@ -1,0 +1,37 @@
+version: "1.0"
+name: "jurisai-env"
+spec_version: 1
+
+endpoints:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  tasks: GET /tasks
+  grader: POST /grader
+  health: GET /healthz
+
+tasks:
+  - id: "task_1_classification"
+    difficulty: "easy"
+    max_reward: 0.95
+    min_reward: 0.05
+    description: "Classify a messy emotional divorce case."
+    grader: "grader.py"
+  - id: "task_2_hallucination_honeypot"
+    difficulty: "medium"
+    max_reward: 0.95
+    min_reward: 0.05
+    mechanic: "hallucination_honeypot"
+    description: "Identify fake legal rulings."
+    grader: "grader.py"
+  - id: "task_3_unreliable_narrator"
+    difficulty: "hard"
+    max_reward: 0.95
+    min_reward: 0.05
+    mechanic: "unreliable_narrator"
+    description: "Cross-examine using hidden BAC evidence."
+    grader: "grader.py"
+
+max_steps: 10
+docker_image: "jurisai-openenv:latest"
+entry_point: "server.app:main"
