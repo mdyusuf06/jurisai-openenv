@@ -16,21 +16,26 @@ tasks:
     max_reward: 0.95
     min_reward: 0.05
     description: "Classify a messy emotional divorce case."
-    grader: "grader.py"
+    grader:
+      endpoint: "/grader"
+      
   - id: "task_2_hallucination_honeypot"
     difficulty: "medium"
     max_reward: 0.95
     min_reward: 0.05
     mechanic: "hallucination_honeypot"
     description: "Identify fake legal rulings."
-    grader: "grader.py"
+    grader:
+      endpoint: "/grader"
+      
   - id: "task_3_unreliable_narrator"
     difficulty: "hard"
     max_reward: 0.95
     min_reward: 0.05
     mechanic: "unreliable_narrator"
     description: "Cross-examine using hidden BAC evidence."
-    grader: "grader.py"
+    grader:
+      endpoint: "/grader"
 
 max_steps: 10
 docker_image: "jurisai-openenv:latest"

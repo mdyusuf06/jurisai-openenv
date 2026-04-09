@@ -28,9 +28,24 @@ TASK_2_POOL = [
 ]
 
 TASKS = [
-    {"id": "task_1_classification", "difficulty": "easy", "description": "Classify a messy emotional divorce case."},
-    {"id": "task_2_hallucination_honeypot", "difficulty": "medium", "description": "Client cites a fake Supreme Court ruling."},
-    {"id": "task_3_unreliable_narrator", "difficulty": "hard", "description": "Client lies about a car accident. Find hidden evidence."},
+    {
+        "id": "task_1_classification", 
+        "difficulty": "easy", 
+        "description": "Classify a messy emotional divorce case.",
+        "grader": {"endpoint": "/grader"}
+    },
+    {
+        "id": "task_2_hallucination_honeypot", 
+        "difficulty": "medium", 
+        "description": "Client cites a fake Supreme Court ruling.",
+        "grader": {"endpoint": "/grader"}
+    },
+    {
+        "id": "task_3_unreliable_narrator", 
+        "difficulty": "hard", 
+        "description": "Client lies about a car accident. Find hidden evidence.",
+        "grader": {"endpoint": "/grader"}
+    },
 ]
 
 class Action(BaseModel):
