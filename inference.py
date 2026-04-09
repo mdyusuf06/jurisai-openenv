@@ -80,26 +80,42 @@ def get_model_action(client, obs, history):
         return {"action_type": "CLASSIFY", "content": "family divorce property"}
 
 async def run_task(http: httpx.AsyncClient, client: OpenAI, task_num: int):
-    await http.post(f"{ENV_URL}/reset", json={"task": task_num})
-    state_res = await http.get(f"{ENV_URL}/state")
-    obs = state_res.json()
     history = []
     rewards = []
     done = False
     steps = 0
+    obs = {}
+    
+    # SAFE CALL 1: Reset
+    try:
+        res = await http.post(f"{ENV_URL}/reset", json={"task": task_num})
+        obs = res.json().get("observation", {})
+    except Exception as e:
+        print(f"[DEBUG] Reset Error: {e}", flush=True)
+
     for step in range(1, MAX_STEPS + 1):
         action = get_model_action(client, obs, history)
-        res = await http.post(f"{ENV_URL}/step", json={"action": action})
-        data = res.json()
-        obs = data.get("observation", obs)
-        reward = float(data.get("reward", 0.05))
-        done = bool(data.get("done", False))
+        reward = 0.05
+        
+        # SAFE CALL 2: Step
+        try:
+            res = await http.post(f"{ENV_URL}/step", json={"action": action})
+            data = res.json()
+            obs = data.get("observation", obs)
+            reward = float(data.get("reward", 0.05))
+            done = bool(data.get("done", False))
+        except Exception as e:
+            print(f"[DEBUG] Step Error: {e}", flush=True)
+            done = True # Prevent infinite loop if server crashes
+            
         rewards.append(reward)
         steps = step
         log_step(step, action, reward, done)
         history.append(f"step={step} action={action} reward={reward}")
+        
         if done:
             break
+            
     return rewards, done, steps
 
 async def main():
